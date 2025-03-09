@@ -1,0 +1,42 @@
+{
+  "endpoints": [
+    {
+      "name": "Make Call",
+      "url": "/api/v1/",
+      "method": "get",
+      "pipeline": [
+        {
+          "step": "external_api_call",
+          "params": {
+            "url": "http://localhost:3100/api/data",
+            "method": "GET",
+            "headers": {
+              "CustomHeader": "CustomValue"
+            }
+          }
+        },
+        {
+          "step": "rename_keys",
+          "params": {
+            "old_key": "message",
+            "new_key": "notif"
+          }
+        },
+        {
+          "step": "remove_key",
+          "params": {
+            "key": "success"
+          }
+        },
+        {
+          "step": "select",
+          "params": {
+            "columns": ["users", "address"],
+            "limit": 10,
+            "offset": 0
+          }
+        }
+      ]
+    }
+  ]
+}
